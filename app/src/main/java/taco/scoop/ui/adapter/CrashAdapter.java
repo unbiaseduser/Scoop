@@ -2,7 +2,6 @@ package taco.scoop.ui.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -17,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import taco.scoop.R;
@@ -30,8 +30,8 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
 
     private final Listener mListener;
     private final int mSelectedColor;
-    private ArrayList<Crash> mItems = new ArrayList<>();
-    private ArrayList<Crash> mSearchedItems = new ArrayList<>();
+    private List<Crash> mItems = new ArrayList<>();
+    private final List<Crash> mSearchedItems = new ArrayList<>();
     private boolean mSearchActive;
     private boolean mSearchPackageName = true;
     private String mLastSearchTerm;
@@ -53,7 +53,7 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
         mCombineSameApps = combine;
     }
 
-    public void setCrashes(ArrayList<Crash> crashes) {
+    public void setCrashes(List<Crash> crashes) {
         if (crashes == null)
             mItems.clear();
         else
@@ -137,18 +137,6 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
         }
         notifyItemChanged(index);
         mListener.onItemSelected(mSelectedCount);
-    }
-
-    public void saveInstanceState(Bundle outState) {
-        outState.putParcelableArrayList("mItems", mItems);
-        outState.putParcelableArrayList("mSearchedItems", mSearchedItems);
-        outState.putBoolean("mSearchActive", mSearchActive);
-    }
-
-    public void restoreInstanceState(Bundle outState) {
-        mItems = outState.getParcelableArrayList("mItems");
-        mSearchedItems = outState.getParcelableArrayList("mSearchedItems");
-        mSearchActive = outState.getBoolean("mSearchActive");
     }
 
     @NonNull

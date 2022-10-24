@@ -4,13 +4,12 @@ plugins {
 }
 
 android {
-    compileSdk 32
-    buildToolsVersion "32.0.0"
+    compileSdk 33
 
     defaultConfig {
         applicationId "taco.scoop"
         minSdk 21
-        targetSdk 32
+        targetSdk 33
         versionCode 34
         versionName "2.4.2"
     }
@@ -47,6 +46,7 @@ android {
     buildFeatures {
         viewBinding true
     }
+    namespace 'taco.scoop'
 }
 
 dependencies {
@@ -61,8 +61,8 @@ dependencies {
 // AndroidX
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.core:core-ktx:1.8.0'
-    implementation 'androidx.fragment:fragment-ktx:1.5.2'
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.fragment:fragment-ktx:1.5.3'
     implementation 'androidx.preference:preference-ktx:1.2.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
 
@@ -71,4 +71,5 @@ dependencies {
     implementation 'com.afollestad:inquiry:5.0.0'
     implementation 'com.afollestad:material-cab:2.0.1'
     implementation 'com.github.topjohnwu.libsu:core:5.0.2'
+    implementation "dev.rikka.rikkax.lifecycle:lifecycle-shared-viewmodel:1.0.1"
 }

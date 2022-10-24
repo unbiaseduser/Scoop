@@ -15,7 +15,7 @@ import java.util.List;
 @Table
 public class Crash implements Parcelable {
 
-    public static final Creator<Crash> CREATOR = new Creator<Crash>() {
+    public static final Creator<Crash> CREATOR = new Creator<>() {
         @Override
         public Crash createFromParcel(Parcel in) {
             return new Crash(in);

@@ -83,7 +83,7 @@ public class CrashLoader {
             if (listener == null || listener.isFinishing() || listener.isDestroyed())
                 return;
             if (result == null) {
-                listener.runOnUiThread(() -> listener.onDataLoaded(null));
+                listener.runOnUiThread(() -> listener.onDataLoaded(new ArrayList<>()));
                 return;
             }
             ArrayList<Crash> data = new ArrayList<>(Arrays.asList(result));
@@ -139,7 +139,7 @@ public class CrashLoader {
     }
 
     private void sortApps(final Context context, ArrayList<Crash> crashes) {
-        Collections.sort(crashes, new Comparator<Crash>() {
+        Collections.sort(crashes, new Comparator<>() {
             private final Collator sC = Collator.getInstance();
 
             @Override
