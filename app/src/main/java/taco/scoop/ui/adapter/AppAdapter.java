@@ -20,11 +20,11 @@ import taco.scoop.databinding.ItemBlacklistBinding;
 
 public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> {
 
-    private final ArrayList<App> mSearchedItems = new ArrayList<>();
-    private ArrayList<App> mItems = new ArrayList<>();
+    private final List<App> mSearchedItems = new ArrayList<>();
+    private List<App> mItems = new ArrayList<>();
     private boolean mSearchActive = false;
 
-    public void setApps(ArrayList<App> items, List<String> blacklisted) {
+    public void setApps(List<App> items, List<String> blacklisted) {
         mItems = items;
         for (App a : mItems)
             for (String pkg : blacklisted)
@@ -39,7 +39,7 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> {
         return mItems.isEmpty();
     }
 
-    public ArrayList<String> getSelectedPackages() {
+    public List<String> getSelectedPackages() {
         ArrayList<String> items = new ArrayList<>();
         for (App a : mItems)
             if (a.selected)

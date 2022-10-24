@@ -63,7 +63,7 @@ object PreferenceHelper {
     val blacklistList: List<String>
         get() = listOf(*blacklistedPackages?.split(",".toRegex())!!.toTypedArray())
 
-    fun editBlacklistPackages(packages: ArrayList<String>) {
+    fun editBlacklistPackages(packages: List<String>) {
         sharedPreferences.edit {
             putString(
                 getKey(R.string.key_blacklisted_packages),
