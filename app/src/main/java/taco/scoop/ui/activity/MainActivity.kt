@@ -4,9 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -53,7 +55,8 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
                 // a different app in the list
                     return
                 if (sVisible && sNewCrash != null) {
-                    mAdapter.addCrash(sNewCrash)
+                    //mAdapter.addCrash(sNewCrash)
+                    mainViewModel.crashes.value!!.add(sNewCrash)
                     updateViewStates(false)
                     sNewCrash = null
                 } else {
@@ -91,13 +94,14 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
         val i = intent
         mHasCrash = i.hasExtra(EXTRA_CRASH)
         if (mHasCrash) {
-            val c: Crash? = mainViewModel.combinedCrash
+            val c = mainViewModel.combinedCrash
             val crashes = ArrayList<Crash?>()
-            crashes.add(c)
-            c?.children?.let(crashes::addAll)
+            //add a copy of the oldest crash without its children to fix TransactionTooLargeException when clicked
+            crashes.add(Crash(c.time, c.packageName, c.description, c.stackTrace))
+            c.children?.let(crashes::addAll)
             mAdapter.setCrashes(crashes)
             supportActionBar?.title =
-                CrashLoader.getAppName(this, c?.packageName, true)
+                CrashLoader.getAppName(this, c.packageName, true)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
         } else {
             mainViewModel.crashes.observe(this) {
@@ -224,6 +228,8 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
                     .putExtra(EXTRA_CRASH, true)
             )
         } else {
+            Log.d("Crash", crash.toString())
+            Log.d("Crash", crash.stackTrace)
             startActivity(
                 Intent(this, DetailActivity::class.java)
                     .putExtra(DetailActivity.EXTRA_CRASH, crash)

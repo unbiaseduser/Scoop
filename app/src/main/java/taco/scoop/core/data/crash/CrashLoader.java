@@ -91,7 +91,6 @@ public class CrashLoader {
                 sortApps(listener, data);
             data = combineStackTraces(data);
             data = combineSameApps(data);
-            setupAdapterData(data);
             // Prefetch and cache the first items to avoid scroll lag.
             // There is the chance the Activity will be destroyed while the items
             // get prefetched but the chance is low as it doesn't take long to load
@@ -168,22 +167,5 @@ public class CrashLoader {
             }
         }
         return newData;
-    }
-
-    private void setupAdapterData(ArrayList<Crash> crashes) {
-        // Set time to latest crash time and count together the.. count
-        for (Crash c : crashes) {
-            long newestTime = c.time;
-            int count = c.count;
-            if (c.children != null) {
-                for (Crash cc : c.children) {
-                    count += cc.count;
-                    if (cc.time > newestTime)
-                        newestTime = cc.time;
-                }
-            }
-            c.time = newestTime;
-            c.displayCount = count;
-        }
     }
 }
